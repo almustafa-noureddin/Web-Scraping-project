@@ -28,12 +28,13 @@ def scrape():
     
     global novel_title
     novel_title=soup.find('h1',class_='text-2xl font-bold m-2.5 uppercase text-center border-2 border-t-0 border-l-0 border-r-0 border-gray-200 border-solid dark:border-gray-400 dark:text-text-dark-mode-light').text
-    
+    if '?page=' in novel:
+        page_number=novel[-1]
     soup=BeautifulSoup(html_text,'lxml')
     chapters=soup.find_all('li',class_='w-full my-1 dark:text-text-dark-common dark:hover:text-text-dark-common-hover')
-    scraping(chapters)
+    scraping(chapters,page_number)
 
-def scraping(chapters):
+def scraping(chapters,page_number):
     global path
     global index
     parent_dir=os.getcwd()
@@ -45,6 +46,7 @@ def scraping(chapters):
     except: 
         print(f'Directory {directory} already exist')
     for index,chapter in enumerate(chapters):
+        index=((int(page_number)-1)*49)+index
         print(f'saving chapter {index+1}')
         if os.path.exists(f'{path}/{index+1}.txt'):
             print('already exists > skipping......')
