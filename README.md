@@ -6,7 +6,7 @@ Extracting novel chapters from lightnovels.me
 - Install the virtualenv package : `pip install virtualenv`
 - Create virtual enviroment using:
  `virtualenv myenv`
- - You can activate the python environment by running :`myenv\Scripts\activate` on windows or `source myenv/bin/activate` on linux and mac.
+ - You can activate the python environment by running : `myenv\Scripts\activate` on windows or `source myenv/bin/activate` on linux and mac.
  - Install requirements `pip install -r requirements.txt`
  - To decativate the virtual environment and use your original Python environment :`deactivate`
  - Run main.py and type the link, for example: `https://lightnovels.me/novel/the-beginning-after-the-end.html`
