@@ -28,20 +28,12 @@ def scrape():
     
     global novel_title
     novel_title=soup.find('h1',class_='text-2xl font-bold m-2.5 uppercase text-center border-2 border-t-0 border-l-0 border-r-0 border-gray-200 border-solid dark:border-gray-400 dark:text-text-dark-mode-light').text
-    pages=soup.find_all('button',class_='MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-page dark:!text-white dark:hover:!bg-gray-800')
-    for i in range (0,len(pages)):
-        next_page=f'{novel}?page={i+1}'
-        pages_urls.append(next_page)
-    for page_index,page in enumerate(pages_urls):
-        try:
-            next_page=requests.get(page).text
-        except:
-            print('no internet connection')
-        soup=BeautifulSoup(next_page,'lxml')
-        chapters=soup.find_all('li',class_='w-full my-1 dark:text-text-dark-common dark:hover:text-text-dark-common-hover')
-        scraping(chapters,page_index)
+    
+    soup=BeautifulSoup(html_text,'lxml')
+    chapters=soup.find_all('li',class_='w-full my-1 dark:text-text-dark-common dark:hover:text-text-dark-common-hover')
+    scraping(chapters)
 
-def scraping(chapters,page_index):
+def scraping(chapters):
     global path
     global index
     parent_dir=os.getcwd()
@@ -53,7 +45,6 @@ def scraping(chapters,page_index):
     except: 
         print(f'Directory {directory} already exist')
     for index,chapter in enumerate(chapters):
-        index=(page_index*49)+index
         print(f'saving chapter {index+1}')
         if os.path.exists(f'{path}/{index+1}.txt'):
             print('already exists > skipping......')
@@ -68,8 +59,7 @@ def scraping(chapters,page_index):
             f.write('~'*10)
             f.write('~'*10)
         print(f'chapter saved {index+1}')
-        
-    
+
 
 
 if __name__ == '__main__':
